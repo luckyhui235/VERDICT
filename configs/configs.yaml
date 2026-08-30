@@ -1,0 +1,7 @@
+llm_config:
+  # Maximum number of new tokens to generate per call
+  max_token: 768
+  # Sampling temperature (0.0 for deterministic)
+  temperature: 0.0
+  # Number of candidates/completions to request
+  num_comps: 1

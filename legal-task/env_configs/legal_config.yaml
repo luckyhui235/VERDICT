@@ -1,0 +1,4 @@
+name: cail2018
+max_steps: 12
+success_threshold: 0.6666667
+term_bucket_mapping_path: ./tests/time2id.json

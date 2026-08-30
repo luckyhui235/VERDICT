@@ -1,0 +1,24 @@
+memory_folder: ./.db
+embedding_model: /data1/liaohui/.cache/modelscope/hub/models/Qwen/Qwen3-Embedding-8B
+
+cail2018:
+  env_config_path: ./legal-task/env_configs/legal_config.yaml
+  max_steps: 12
+  few_shots_num: 0
+  law_articles_path: ./law_article/law_articles_mapping.jsonl
+  laws_initial_topk: 10
+  laws_topk: 5
+  retrieval_use_bm25: false
+  retrieval_mode: dense
+  retrieval_bm25_top_k: 50
+  retrieval_faiss_top_k: 100
+  retrieval_fusion_alpha: 0.7
+
+macnet:
+  graph_type: Chain
+  node_num: 4
+  round_num: 2
+  learning_rate: 0.01
+  use_critic: False
+  verify_threshold: 0.7
+  decision_max_tokens: 768
