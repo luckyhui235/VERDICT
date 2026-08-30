@@ -1,5 +1,7 @@
 memory_folder: ./.db
-embedding_model: /data1/liaohui/.cache/modelscope/hub/models/Qwen/Qwen3-Embedding-8B
+# A Hugging Face/model-provider identifier. Override with EMBEDDING_MODEL to use
+# a local checkpoint path.
+embedding_model: Qwen/Qwen3-Embedding-8B
 
 cail2018:
   env_config_path: ./legal-task/env_configs/legal_config.yaml

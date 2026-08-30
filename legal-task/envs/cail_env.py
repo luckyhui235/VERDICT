@@ -10,6 +10,9 @@ from .base_env import BaseEnv, BaseRecorder
 from .utils import normalize_answer
 
 
+_PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
+
+
 class CAILEnv(BaseEnv):
     """
     CAIL2018 环境：输入为事实文本 fact，输出需为包含三个子任务的 JSON：
@@ -26,10 +29,15 @@ class CAILEnv(BaseEnv):
         self.max_trials: int = max_trials
         self.success_threshold: float = float(self.env_config.get('success_threshold', 1.0))
         self._term_bucket_map = None
-        try:
-            self._term_bucket_mapping_path = str(self.env_config.get('term_bucket_mapping_path') or '/data1/liaohui/LegalMAS/tests/time2id.json')
-        except Exception:
-            self._term_bucket_mapping_path = '/data1/liaohui/LegalMAS/tests/time2id.json'
+        mapping_path = os.environ.get(
+            'TERM_BUCKET_MAPPING_PATH',
+            str(self.env_config.get('term_bucket_mapping_path') or ''),
+        )
+        self._term_bucket_mapping_path = (
+            mapping_path
+            if os.path.isabs(mapping_path)
+            else os.path.join(_PROJECT_ROOT, mapping_path)
+        )
         self.reset()
 
     def set_env(self, configs: dict) -> tuple[str, str]:
@@ -541,7 +549,9 @@ class CAILRecorder(BaseRecorder):
         self.counts = 0
         self.dones = 0
         self.rewards = 0
-        self._eval_base_dir = '/data1/liaohui/LegalMAS-new/eval'
+        self._eval_base_dir = os.environ.get(
+            'EVAL_OUTPUT_DIR', os.path.join(self.working_dir, 'eval')
+        )
         os.makedirs(self._eval_base_dir, exist_ok=True)
         self._eval_run_dir = None
         self._eval_file = None

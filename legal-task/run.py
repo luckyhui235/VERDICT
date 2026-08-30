@@ -31,6 +31,11 @@ except ImportError:
 with open(os.path.join(os.path.dirname(__file__), 'configs.yaml')) as reader:
     CONFIG: dict = yaml.safe_load(reader)
 
+# A local checkpoint path can be supplied without editing the tracked config.
+CONFIG['embedding_model'] = os.environ.get(
+    'EMBEDDING_MODEL', CONFIG.get('embedding_model', 'sentence-transformers/all-MiniLM-L6-v2')
+)
+
 WORKING_DIR: str = None
 
 class TaskManager:

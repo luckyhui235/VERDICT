@@ -1,4 +1,6 @@
 name: cail2018
 max_steps: 12
 success_threshold: 0.6666667
-term_bucket_mapping_path: ./tests/time2id.json
+# Relative paths are resolved from the repository root. Set
+# TERM_BUCKET_MAPPING_PATH to override this location.
+term_bucket_mapping_path: data/cail2018/time2id.json

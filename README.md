@@ -70,7 +70,7 @@ conda activate verdict
 pip install -r requirements.txt
 ```
 
-The default embedding configuration in [`legal-task/configs.yaml`](legal-task/configs.yaml) points to a local Qwen3-Embedding-8B model path. Update `embedding_model` to a local model path or a model identifier available in your environment before running an experiment.
+The default embedding configuration in [`legal-task/configs.yaml`](legal-task/configs.yaml) uses the `Qwen/Qwen3-Embedding-8B` model identifier. Set `EMBEDDING_MODEL` to a local checkpoint path or another available model identifier before running an experiment.
 
 ## Model Configuration
 
@@ -90,6 +90,14 @@ export OPENAI_API_KEY="<your-key>"
 ```
 
 Do not commit keys, provider credentials, model paths, or local data paths. Keep them in an ignored local `.env` file or in your shell environment.
+
+You may copy [`.env.example`](.env.example) to `.env` and fill only the variables required by your setup. The following optional variables keep local paths and run outputs out of the tracked configuration:
+
+```bash
+EMBEDDING_MODEL="/path/to/embedding-model"
+TERM_BUCKET_MAPPING_PATH="/path/to/time2id.json"
+EVAL_OUTPUT_DIR="/path/to/evaluation-output"
+```
 
 ## Running Evaluation
 
@@ -127,7 +135,7 @@ Run artifacts, evaluation predictions, and persistent memory are written beneath
 
 The paper evaluates VERDICT on the following datasets:
 
-- **CAIL2018 (CAIL-Small):** the primary benchmark for legal judgment prediction. The repository expects its evaluation data under `data/cail2018/`.
+- **CAIL2018 (CAIL-Small):** the primary benchmark for legal judgment prediction. The repository expects its evaluation data under `data/cail2018/`. If you use the optional term-bucket mapping, place it at `data/cail2018/time2id.json` or set `TERM_BUCKET_MAPPING_PATH`.
 - **CJO2025:** a future time-split benchmark constructed from China Judgments Online judgments after 1 January 2025. It is used to evaluate temporal generalization and reduce potential contamination by the pre-training corpora of the evaluated LLMs.
 - **Statutory library:** `law_article/law_articles_mapping.jsonl` supplies the statute text used during retrieval.
 
